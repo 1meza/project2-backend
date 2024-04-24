@@ -19,10 +19,20 @@ module.exports.saveNewUser = function(req, res, next) {
 
     console.log("NEW User Data  " + value_firstName + "  email: " + value_email);
 
-    saveUserToMongoDB(value_firstName, value_email);
+    try {
+        saveUserToMongoDB(value_firstName, value_email);
+        res.redirect('https://csweb01.csueastbay.edu/~rc3325/group_project_2/account-created.html')
 
-    res.send("Welcome,  " + value_firstName + "</br> We will reach you at: " + value_email);
+    } catch(errors) {
+        console.log("Failed to save user");
+        res.status(500).send("Error creating user.");
+    }
 
+
+
+    //res.send("Welcome,  " + value_firstName + "</br> We will reach you at: " + value_email);
+
+    //res.render('account-made', { firstName: value_firstName });
 };
 
 async function saveUserToMongoDB(name, email) {
