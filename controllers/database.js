@@ -98,15 +98,25 @@ async function saveUserToMongoDB(name, email, password, billingInfo) {
 }
 
 // login function
-// module.exports.login = function(req, res, next) {
-//     var email = req.body.email;
-//     var password = req.body.password;
-//
-//         console.log("Login attempt with email: " + email);
-//
-//         authenticateUser(email, password);
-//
-//     };
+module.exports.login = function(req, res, next) {
+    var email = req.body.email;
+    var password = req.body.password;
+
+        console.log("Login attempt with email: " + email);
+
+        var valid  = authenticateUser(email, password);
+
+        if (valid){
+            // if the user is valid, redirect to the home page
+            res.render('logged-in', { name: email });
+        }
+        else{
+            // if the user is not valid, redirect to the login page
+            res.render('logged-in', { error: "Invalid email or password" });
+        }
+
+
+    };
 
 // authenticate user
 async function authenticateUser(email, password) {
@@ -131,10 +141,10 @@ async function authenticateUser(email, password) {
         const userExists = await users.findOne(query);
         if (userExists) {
             console.log("User with email " + email + " exists");
-            return query;
+            return true;
         } else {
             console.log("User with email " + email + " does not exist");
-            return null;
+            return false;
         }
 
     } finally {

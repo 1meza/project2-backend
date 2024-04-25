@@ -3,14 +3,22 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
+
 
 var usersRouter = require('./routes/users');
 
 var app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+app.use(session({
+    secret: 'salt', // Choose a strong secret for session encryption
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: 'auto', httpOnly: true } // secure: 'auto' will use secure cookies if the site is accessed over HTTPS
+}));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -19,6 +27,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
+
+function isAuthenticated(req, res, next) {
+    if (req.session.user) {
+        next();
+    } else {
+        res.status(401).send("Not authorized");
+    }
+}
 
 
 // catch 404 and forward to error handler
