@@ -27,7 +27,17 @@ module.exports.saveNewUser = function(req, res, next) {
         zipcode: req.body.zipcode,
         phone: req.body.phone
     };
-
+    //shipment info
+    var shipmentInfo:{}  = {
+        email: req.body.email,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        address: req.body.address,
+        city: req.body.city,
+        state: req.body.state,
+        zipcode: req.body.zipcode,
+        shipping_method: req.body.shipping_method
+    };
 
     console.log("NEW User Data  " + firstName + "  email: " + email);
 
@@ -38,6 +48,7 @@ module.exports.saveNewUser = function(req, res, next) {
     //res.send("Welcome,  " + value_firstName + "</br> We will reach you at: " + value_email);
 
 };
+
 
 async function saveUserToMongoDB(name, email, password, billingInfo) {
     try {
@@ -131,4 +142,76 @@ async function authenticateUser(email, password) {
     }
 }
 
+
+
+//get shipping info
+module.exports.saveShipping = function (userInput) {
+    var email = userInput.email;
+    var firstName = userInput.first_name;
+    var lastName = userInput.last_name;
+    var address = userInput.address;
+    var city = userInput.city;
+    var state = userInput.state;
+    var zipCode = userInput.zip_code;
+    var shippingMethod = userInput.shipping_method;
+
+    var shippingInfo = {
+        email: req.body.email,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        address: req.body.address,
+        city: req.body.city,
+        state: req.body.state,
+        zipcode: req.body.zipcode,
+        shipping_method: req.body.shipping_method
+    };
+
+    //display on console
+    console.log("shipment info: " + shippingInfo);
+    //call function to upload to mongodb
+    saveShippingToMongoDB(shipmentInfo);
+
+    return shippingInfo;
+}
+
+//function to save Shipping information to mongo
+async function saveShippingToMongoDB(userInput) {
+    try {
+        // Connect the client to the server (optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+        // connect to the database "project_2"
+        const database = client.db("project_2");
+        // grab the collection "users"
+        const users = database.collection("users");
+        // grab the collection "shipping"
+        const shipping = database.collection("shipping");
+
+        // check if the user already exists
+        const email = userInput.email;
+        const query = { email: email };
+        const userExists = await users.findOne(query);
+        if (userExists) {
+            console.log("User with email " + email + " already exists");
+            return;
+        }
+
+        // insert the new user into the users collection
+        const user = { name: userInput.first_name + " " + userInput.last_name, email: email, pw: "dummy" };
+        const result = await users.insertOne(user);
+        console.log("New user created with the following id: " + result.insertedId);
+
+        // insert the shipping information into the shipping collection associated with the user
+        const shippingInfo = saveShipping(userInput);
+        shippingInfo.user_id = result.insertedId;
+        const shippingResult = await shipping.insertOne(shippingInfo);
+        console.log("New shipping info created with the following id: " + shippingResult.insertedId);
+    } finally {
+        // Ensures that the client will close when you finish/error
+        await client.close();
+    }
+}
 
