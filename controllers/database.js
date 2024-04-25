@@ -191,19 +191,11 @@ async function saveShippingToMongoDB(userInput) {
         // grab the collection "shipping"
         const shipping = database.collection("shipping");
 
-        // check if the user already exists
-        const email = userInput.email;
-        const query = { email: email };
-        const userExists = await users.findOne(query);
-        if (userExists) {
-            console.log("User with email " + email + " already exists");
-            return;
-        }
 
-        // insert the new user into the users collection
-        const user = { name: userInput.first_name + " " + userInput.last_name, email: email, pw: "dummy" };
-        const result = await users.insertOne(user);
-        console.log("New user created with the following id: " + result.insertedId);
+        // insert the new user into the shipping collection
+        const shipment = { userInput};
+        const result = await users.insertOne(shipment);
+        console.log("shipment is teh following: " + result.insertedId);
 
         // insert the shipping information into the shipping collection associated with the user
         const shippingInfo = saveShipping(userInput);
