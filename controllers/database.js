@@ -149,6 +149,7 @@ async function authenticateUser(email, password) {
 
 // logout function
 module.exports.logout = function(req, res) {
+    // destroy the session
     req.session.destroy((err) => {
         if (err) {
             return console.log(err);
