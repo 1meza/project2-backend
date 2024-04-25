@@ -27,8 +27,9 @@ module.exports.saveNewUser = function(req, res, next) {
         zipcode: req.body.zipcode,
         phone: req.body.phone
     };
+
     //shipment info
-    var shipmentInfo:{}  = {
+    var shipmentInfo  = {
         email: req.body.email,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
