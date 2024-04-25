@@ -144,7 +144,7 @@ async function authenticateUser(email, password) {
 
 
 
-//get shipping info
+//get shipping information
 module.exports.saveShipping = function (userInput) {
     var email = userInput.email;
     var firstName = userInput.first_name;
