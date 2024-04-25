@@ -1,0 +1,197 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Jordan 3 AMM",
+      "price": 180,
+      "image": "images/sneakers/IMG_9326.png",
+      "numberOfItems": null
+    },
+    {
+      "id": 2,
+      "name": "Dunk Low Green and White",
+      "price": 110,
+      "image": "images/sneakers/IMG_9258.png",
+      "numberOfItems": null
+    },
+    {
+      "id": 3,
+      "name": "YZY Foam RNNR",
+      "price": 80,
+      "image": "images/sneakers/IMG_9255.png",
+      "numberOfItems": null
+    },
+    {
+      "id": 4,
+      "name": "Jordan 5 'Toro Red'",
+      "price": 210,
+      "image": "images/sneakers/IMG_8684.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 5,
+      "name": "YZY 700 v3 \"Kyanite\"",
+      "price": 240,
+      "image": "images/sneakers/IMG_8531.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 6,
+      "name":"Nike Air Max 90 \"V-Day\" ",
+      "price": 150,
+      "image": "images/sneakers/IMG_8509.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 7,
+      "name":"Jordan 3 \"Taupe Haze\" ",
+      "price": 150,
+      "image": "images/sneakers/IMG_8476.JPEG ",
+      "numberOfItems": null
+    },
+    {
+      "id": 8,
+      "name":"Jordan 1 \"University Blue\" ",
+      "price": 120,
+      "image": "images/sneakers/IMG_8472.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 9,
+      "name":"Jordan 1 \"Volt\" ",
+      "price": 170,
+      "image": "images/sneakers/IMG_8462.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 10,
+      "name":"Jordan 11 Low \"Concord\" ",
+      "price": 80,
+      "image": "images/sneakers/IMG_8469.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 11,
+      "name":"Dunk High \"Football Grey\"",
+      "price": 100,
+      "image": "images/sneakers/IMG_8380.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 12,
+      "name":"Supreme Nike Air Force 1",
+      "price": 100,
+      "image": "images/sneakers/IMG_8364.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 13,
+      "name":"YZY 350 v2 \"Pirate Black\"",
+      "price": 120,
+      "image": "images/sneakers/IMG_8220.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 14,
+      "name":"Jordan 5 \"Anthracite\"",
+      "price": 200,
+      "image": "images/sneakers/IMG_8214.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 15,
+      "name":"YZY 700 \"Mauve\"",
+      "price": 120,
+      "image": "images/sneakers/IMG_8004.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 16,
+      "name":"Jordan 1 \"Royal Toe\"",
+      "price": 160,
+      "image": "images/sneakers/IMG_7886.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 17,
+      "name":"SB Dunk Low \"Snakeskin\"",
+      "price": 145,
+      "image": "images/sneakers/IMG_7841.JPEG",
+      "numberOfItems": null
+    },
+    {
+
+      "id": 18,
+      "name":"SB Dunk Low \"X-Mas\"",
+      "price": 300,
+      "image": "images/sneakers/IMG_7836.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 19,
+      "name":"Jordan 5 \"Grape\"",
+      "price": 180,
+      "image": "images/sneakers/IMG_7653.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 20,
+      "name":"Jordan 1 \"Obsidian\"",
+      "price": 180,
+      "image": "images/sneakers/IMG_7633.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 21,
+      "name":"Nike Blazer",
+      "price": 60,
+      "image": "images/sneakers/IMG_7515.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 22,
+      "name":"UGG Kid Boots",
+      "price": 40,
+      "image": "images/sneakers/IMG_7518.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 23,
+      "name":"Jordan 3 Kids",
+      "price": 40,
+      "image": "images/sneakers/IMG_7514.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 24,
+      "name":"Jordan 4 \"Fire Red\"",
+      "price": 140,
+      "image": "images/sneakers/IMG_7481.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 25,
+      "name":"Jordan 1 \"Mocha\"",
+      "price": 170,
+      "image": "images/sneakers/IMG_7477.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 26,
+      "name": "Jordan 1 \"Midnight Navy\"",
+      "price": 40,
+      "image":"images/sneakers/IMG_7415.JPEG",
+      "numberOfItems": null
+    },
+    {
+      "id": 27,
+      "name":"Jordan 1 \"Mocha\"",
+      "price": 250,
+      "image": "images/sneakers/IMG_7998.png",
+      "numberOfItems": null
+    }
+  ]
+}
+
+
+
