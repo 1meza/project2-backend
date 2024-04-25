@@ -12,7 +12,9 @@ var userController = require('../controllers/database.js');
 
 router.post('/create-account', userController.saveNewUser);
 
-router.post('/login', userController.login);
+router.post('/account', userController.accountLogin);
+
+router.post('/logout', userController.logout);
 
 //router.get('/account-made', userController.accountCreated);
 

@@ -1,0 +1,18 @@
+<%- include('layouts/head.ejs') %>
+<body class="bg-light">
+
+<%- include('layouts/header.ejs') %>
+<div class="container mb-3">
+    <div class="row p-2">
+        <div class="col p-2">
+            <div class="display-1">Account</div>
+        </div>
+        <hr class="bg-black border-2 border-top border-black" />
+    </div>
+    <p class="lead">Welcome, <%= name %>!</p>
+    <form action="/logout" method="POST">
+        <input type="submit" value="Logout" class="btn btn-danger">
+    </form>
+
+</div>
+<%- include('layouts/footer.ejs') %>

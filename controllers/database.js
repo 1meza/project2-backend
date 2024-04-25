@@ -1,6 +1,6 @@
 var { uri } = require('./databaseConnection');
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const {request} = require("express");
 
 const client = new MongoClient(uri, {
@@ -26,18 +26,6 @@ module.exports.saveNewUser = function(req, res, next) {
         state: req.body.state,
         zipcode: req.body.zipcode,
         phone: req.body.phone
-    };
-
-    //shipment info
-    var shipmentInfo  = {
-        email: req.body.email,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        address: req.body.address,
-        city: req.body.city,
-        state: req.body.state,
-        zipcode: req.body.zipcode,
-        shipping_method: req.body.shipping_method
     };
 
     console.log("NEW User Data  " + firstName + "  email: " + email);
@@ -98,27 +86,30 @@ async function saveUserToMongoDB(name, email, password, billingInfo) {
 }
 
 // login function
-module.exports.login = function(req, res, next) {
+module.exports.accountLogin = async function(req, res, next) {
     var email = req.body.email;
     var password = req.body.password;
 
         console.log("Login attempt with email: " + email);
 
-        var valid  = authenticateUser(email, password);
+        var user  = await authenticateUser(email, password);
 
-        if (valid){
+        if (user != null){
+            // store the user in the session
+            req.session.user = user;
             // if the user is valid, redirect to the home page
-            res.render('logged-in', { name: email });
+            res.render('account', { name: user.name })
         }
         else{
-            // if the user is not valid, redirect to the login page
-            res.render('logged-in', { error: "Invalid email or password" });
+            // if the user is not valid, redirect to the csweb01 page with an error message
+            res.redirect('https://csweb01.csueastbay.edu/~rc3325/group_project_2/account.html' + "?error=invalid_login_credentials");
+
         }
 
 
     };
 
-// authenticate user
+// authenticate+ user
 async function authenticateUser(email, password) {
     try {
         // Connect the client to the server	(optional starting in v4.7)
@@ -131,21 +122,24 @@ async function authenticateUser(email, password) {
         const database = client.db("project_2");
         // grab the collection "users"
         const users = database.collection("users");
-        // log the collection
-        console.log("Collection is " + users.collectionName);
-        // log the number of documents in the collection
-        console.log("# documents in it " + await users.countDocuments());
 
-        // check if the user exists (with this email and password)
-        const query = { email: email, pw: password };
-        const userExists = await users.findOne(query);
-        if (userExists) {
-            console.log("User with email " + email + " exists");
-            return true;
-        } else {
+        // retrieve the user with the given email
+        const query = { email: email };
+        const user = await users.findOne(query);
+        if (!user) {
             console.log("User with email " + email + " does not exist");
-            return false;
+            return null;
         }
+
+        // check if the password is correct
+        if (user.pw === password) {
+            console.log("User with email " + email + " authenticated");
+            return user;
+        } else {
+            console.log("User password does not match");
+            return null;
+        }
+
 
     } finally {
         // Ensures that the client will close when you finish/error
@@ -153,6 +147,16 @@ async function authenticateUser(email, password) {
     }
 }
 
+// logout function
+module.exports.logout = function(req, res) {
+    req.session.destroy((err) => {
+        if (err) {
+            return console.log(err);
+        }
+        // redirect to the csweb01 page
+        res.redirect('https://csweb01.csueastbay.edu/~rc3325/group_project_2/account.html');
+    });
+};
 
 
 //get shipping information

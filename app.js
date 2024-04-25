@@ -14,7 +14,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(session({
-    secret: 'salt', // Choose a strong secret for session encryption
+    secret: 'uber_secret_key', // Choose a strong secret for session encryption
     resave: false,
     saveUninitialized: true,
     cookie: { secure: 'auto', httpOnly: true } // secure: 'auto' will use secure cookies if the site is accessed over HTTPS
@@ -52,5 +52,7 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
+
 
 module.exports = app;
