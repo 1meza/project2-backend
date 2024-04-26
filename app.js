@@ -4,9 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
+// cors is a middleware that allows the server to accept requests from other domains
 
 
 var usersRouter = require('./routes/users');
+var productsRouter = require('./routes/products');
 
 var app = express();
 // view engine setup
@@ -27,6 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
+app.use('/products', productsRouter);
 
 function isAuthenticated(req, res, next) {
     if (req.session.user) {
