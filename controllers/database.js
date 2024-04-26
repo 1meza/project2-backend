@@ -199,7 +199,7 @@ module.exports.saveOrder = function (req, res, next) {
         products: req.session.cart,
         total: req.session.total,
         shipping: req.body.shipping,
-        //grand_total: req.session.grand_total
+        grand_total: req.session.grand_total
     };
 
     var shippingInfo = {
