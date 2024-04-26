@@ -1,0 +1,32 @@
+<%- include('layouts/head.ejs') %>
+<body class="bg-light">
+
+<%- include('layouts/header.ejs') %>
+<div class="container mb-3">
+    <div class="row p-2">
+        <div class="col p-2">
+            <div class="display-1">Order Summary</div>
+        </div>
+        <hr class="bg-black border-2 border-top border-black" />
+    </div>
+    <p class="lead">THANK YOU FOR YOUR SUBMITTED ORDER</p>
+    <h2>Order Summary</h2>
+    <ul>
+        <li>User ID: <%= order.user_id %></li>
+        <li>Products: <%= order.products.join(', ') %></li>
+        <li>Total: $<%= order.total %></li>
+        <li>Shipping: <%= order.shipping %></li>
+
+    </ul>
+
+    <h2>Shipping Information</h2>
+    <p>Email: <%= shippingInfo.email %></p>
+    <p>Name: <%= shippingInfo.firstname %> <%= shippingInfo.lastname %></p>
+    <p>Address: <%= shippingInfo.address %>, <%= shippingInfo.city %>, <%= shippingInfo.state %> <%= shippingInfo.zipcode %></p>
+    <p>Shipping Method: <%= shippingInfo.shipping_method %></p>
+
+    <h2>Billing Information</h2>
+    <p>Address: <%= billingInfo.address_1 %> <%= billingInfo.address_2 %>, <%= billingInfo.city %>, <%= billingInfo.state %> <%= billingInfo.zipcode %></p>
+    <p>Phone: <%= billingInfo.phone %></p>
+</div>
+<%- include('layouts/footer.ejs') %>

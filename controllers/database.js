@@ -194,13 +194,91 @@ module.exports.checkOut = function (req, res, next) {
 
 // save order information
 module.exports.saveOrder = function (req, res, next) {
+    var order = {
+        user_id: req.session.user._id,
+        products: req.session.cart,
+        total: req.session.total,
+        shipping: req.body.shipping,
+        //grand_total: req.session.grand_total
+    };
+
+    var shippingInfo = {
+        user_id: req.session.user._id,
+        email: req.body.email,
+        firstname: req.body.firstName,
+        lastname: req.body.lastName,
+        address: req.body.address_1 + " " + req.body.address_2,
+        city: req.body.city,
+        state: req.body.state,
+        zipcode: req.body.zipcode,
+        shipping_method: req.body.shipping_method
+    };
+
+    var billingInfo = {
+        user_id: req.session.user._id,
+        address_1: req.body.address_1,
+        address_2: req.body.address_2,
+        city: req.body.city,
+        state: req.body.state,
+        zipcode: req.body.zipcode,
+        phone: req.body.phone
+    };
 
 
     //console.log("Order data: " + order);
 
-    saveOrderToMongoDB(order);
+    saveOrderToMongoDB(order, shippingInfo, billingInfo);
 
-    res.render('storeOrder', { order: order });
+    res.render('storeOrder', { order: order, shippingInfo: shippingInfo, billingInfo: billingInfo});
+}
+
+module.exports.storeTotal = function (req, res, next) {
+    var total = req.body.total;
+
+    req.session.grand_total = total;
+
+    res.end();
+
+}
+
+//function to save order information to mongo
+async function saveOrderToMongoDB(order, shippingInfo, billingInfo) {
+    try {
+        // Connect the client to the server (optional starting in v4.7)
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
+        // connect to the database "project_2"
+        const database = client.db("project_2");
+        // grab the collection "users"
+        const users = database.collection("users");
+        // grab the collection "orders"
+        const orders = database.collection("orders");
+        // grab the collection "shipping"
+        const shipping = database.collection("shipping");
+        // grab the collection "billing"
+        const billing = database.collection("billing");
+
+        // insert the order into the orders collection
+        const result = await orders.insertOne(order);
+        console.log("Order created with the following id: " + result.insertedId);
+
+        // insert the shipping information into the shipping collection associated with the user
+        shippingInfo.order_id = result.insertedId;
+        const shippingResult = await shipping.insertOne(shippingInfo);
+        console.log("New shipping info created with the following id: " + shippingResult.insertedId);
+
+        // insert the billing information into the billing collection associated with the user
+        billingInfo.order_id = result.insertedId;
+        const billingResult = await billing.insertOne(billingInfo);
+        console.log("New billing info created with the following id: " + billingResult.insertedId);
+
+    } finally {
+        // Ensures that the client will close when you finish/error
+        await client.close();
+    }
 }
 
 

@@ -51,29 +51,26 @@
                     <div class="display-4">Total</div>
                 </div>
                 <div class="col">
-                    <div class="display-4">$<%= total %></div>
+                    <div class="display-4" id="totalAmount" value="<%= total %>">$<%= total %></div>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <a href="/checkout" class="btn btn-primary">Checkout</a>
+            <a href="/checkout" class="btn btn-primary" id="checkoutButton">Checkout</a>
         </div>
     </div>
 </div>
 <script>
-    document.querySelectorAll('#productQuantity').forEach(input => {
-        input.addEventListener('change', function(e) {
-            const productId = this.dataset.productId;
-            const quantity = this.value;
-            fetch('/updateCart', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ productId, quantity }),
-            });
+    document.querySelector('#checkoutButton').addEventListener('click', function() {
+        const total = <%= total %>; // This gets the total value from EJS
+        fetch('/storeTotal', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ total }),
         });
     });
 </script>

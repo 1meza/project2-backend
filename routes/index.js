@@ -16,5 +16,7 @@ router.post('/updateCart', userController.updateCart);
 router.get('/checkout', userController.checkOut);
 router.post('/checkout', userController.saveOrder);
 
+router.post('/storeTotal', userController.storeTotal);
+
 
 module.exports = router;

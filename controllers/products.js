@@ -39,7 +39,7 @@ module.exports.productStorage = function(req, res, next) {
     }
 
     // save to MongoDB
-    saveProductToMongoDB(product_id, quantity, quantity * price);
+    //saveProductToMongoDB(product_id, quantity, quantity * price);
 
     // redirect to the csweb01 product page with the product_id
     res.redirect('https://csweb01.csueastbay.edu/~rc3325/group_project_2/products/' + product_number);
