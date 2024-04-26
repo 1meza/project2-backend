@@ -160,6 +160,50 @@ module.exports.logout = function(req, res) {
 };
 
 
+// view cart function
+module.exports.viewCart = function (req, res, next) {
+    // check if the cart is empty
+    if (!req.session.cart) {
+        res.render('cart', { cart: [] });
+    } else {
+        res.render('cart', { cart: req.session.cart });
+    }
+};
+
+// update cart function
+module.exports.updateCart = function (req, res, next) {
+    var product_id = req.body.product_id;
+    var quantity = req.body.quantity;
+
+    var existingProductIndex = req.session.cart.findIndex(item => item.product_id === product_id);
+    if (existingProductIndex > -1) {
+        // Product exists, update quantity
+        req.session.cart[existingProductIndex].quantity += parseInt(quantity);
+    }
+}
+
+// checkout function
+module.exports.checkOut = function (req, res, next) {
+    // check if the user is logged in
+    if (!req.session.user) {
+        res.redirect('https://csweb01.csueastbay.edu/~rc3325/group_project_2/account.html');
+    } else {
+        res.render('checkout', { user: req.session.user, cart: req.session.cart });
+    }
+}
+
+// save order information
+module.exports.saveOrder = function (req, res, next) {
+
+
+    //console.log("Order data: " + order);
+
+    saveOrderToMongoDB(order);
+
+    res.render('storeOrder', { order: order });
+}
+
+
 //get shipping information
 module.exports.saveShipping = function (userInput) {
     var email = userInput.email;

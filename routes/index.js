@@ -10,6 +10,11 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 var userController = require('../controllers/database.js');
 
+router.get('/viewCart', userController.viewCart);
+router.post('/updateCart', userController.updateCart);
+
+router.get('/checkout', userController.checkOut);
+router.post('/checkout', userController.saveOrder);
 
 
 module.exports = router;

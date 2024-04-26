@@ -1,0 +1,80 @@
+<%- include('layouts/head.ejs') %>
+<body class="bg-light">
+
+<%- include('layouts/header.ejs') %>
+<div class="container mb-3">
+    <div class="row p-2">
+        <div class="col p-2">
+            <div class="display-1">Cart</div>
+        </div>
+        <hr class="bg-black border-2 border-top border-black" />
+    </div>
+<!--  Add product details from user cart session  -->
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <div class="display-4">Product</div>
+                </div>
+                <div class="col">
+                    <div class="display-4">Price</div>
+                </div>
+                <div class="col">
+                    <div class="display-4">Quantity</div>
+                </div>
+                <div class="col">
+                    <div class="display-4">Total</div>
+                </div>
+            </div>
+            <hr class="bg-black border-2 border-top border-black" />
+            <% var total = 0 %>
+            <% for (let i = 0; i < cart.length; i++) { %>
+                <div class="row">
+                    <div class="col">
+                        <div class="display-6"><%= cart[i].product_id %></div>
+                    </div>
+                    <div class="col">
+                        <div class="display-6">$<%= cart[i].price %></div>
+                    </div>
+                    <div class="col">
+                        <input type="number" name="quantity" id="productQuantity" value="<%= cart[i].quantity %>" min="1" class="form-control text-center me-3" style="width: 80px;">
+                    </div>
+                    <div class="col">
+                        <div class="display-6">$<%= cart[i].price * cart[i].quantity %></div>
+                    </div>
+                </div>
+                <% total = total + cart[i].price * cart[i].quantity %>
+                <hr class="bg-black border-2 border-top border-black" />
+            <% } %>
+            <div class="row">
+                <div class="col">
+                    <div class="display-4">Total</div>
+                </div>
+                <div class="col">
+                    <div class="display-4">$<%= total %></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a href="/checkout" class="btn btn-primary">Checkout</a>
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('#productQuantity').forEach(input => {
+        input.addEventListener('change', function(e) {
+            const productId = this.dataset.productId;
+            const quantity = this.value;
+            fetch('/updateCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ productId, quantity }),
+            });
+        });
+    });
+</script>
+<%- include('layouts/footer.ejs') %>

@@ -9,6 +9,7 @@ var session = require('express-session');
 
 var usersRouter = require('./routes/users');
 var productsRouter = require('./routes/products');
+var indexRouter = require('./routes/index');
 
 var app = express();
 // view engine setup
@@ -19,7 +20,7 @@ app.use(session({
     secret: 'uber_secret_key', // Choose a strong secret for session encryption
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: 'auto', httpOnly: true } // secure: 'auto' will use secure cookies if the site is accessed over HTTPS
+    cookie: { secure: 'auto', maxAge: 3600000 } // secure: 'auto' will use secure cookies if the site is accessed over HTTPS
 }));
 
 app.use(logger('dev'));
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
+app.use('/', indexRouter);
 
 function isAuthenticated(req, res, next) {
     if (req.session.user) {

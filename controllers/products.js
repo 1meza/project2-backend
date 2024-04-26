@@ -19,12 +19,24 @@ module.exports.productStorage = function(req, res, next) {
     var price = req.body.price;
     var product_number = req.body.product_page_number;
 
+    var total = quantity * price;
+
     console.log("Product Data  " + product_id + "  quantity: " + quantity);
 
     // add to express-session
-    req.session.product_id = product_id;
-    req.session.quantity = quantity;
-    req.session.total = quantity * price;
+    if (!req.session.cart) {
+        req.session.cart = []; // Initialize cart if it doesn't exist
+    }
+
+    // Find existing product in the cart
+    const existingProductIndex = req.session.cart.findIndex(item => item.product_id === product_id);
+    if (existingProductIndex > -1) {
+        // Product exists, update quantity
+        req.session.cart[existingProductIndex].quantity += parseInt(quantity);
+    } else {
+        // Add new product to cart
+        req.session.cart.push({ product_id, quantity, price, total });
+    }
 
     // save to MongoDB
     saveProductToMongoDB(product_id, quantity, quantity * price);
